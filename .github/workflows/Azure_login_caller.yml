@@ -12,7 +12,7 @@ jobs:
     steps:
     
     - name: 'Login via Azure CLI'
-      uses: azure/login@v1
+      uses: azure/actions/login@v1
       with:
         #store this as secrets in github
         creds: ${{ secrets.AZURE_CREDENTIALS }}
