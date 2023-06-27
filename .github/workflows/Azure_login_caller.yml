@@ -1,0 +1,15 @@
+name: Az login
+
+on:
+  workflow_call: 
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    
+    - name: 'Login via Azure CLI'
+      uses: azure/login@v1
+      with:
+        #store this as secrets in github
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
