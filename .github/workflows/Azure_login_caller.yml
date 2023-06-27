@@ -3,7 +3,7 @@ name: Az login
 on:
   workflow_call: 
    secrets:
-      creds:
+      AZURE_CREDENTIALS:
         required: true
   
 jobs:
@@ -15,4 +15,4 @@ jobs:
       uses: azure/actions/login@v1
       with:
         #store this as secrets in github
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS }}
