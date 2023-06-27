@@ -2,6 +2,9 @@ name: Az login
 
 on:
   workflow_call: 
+   secrets:
+      creds:
+        required: true
   
 jobs:
   build:
