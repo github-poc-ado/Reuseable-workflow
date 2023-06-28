@@ -12,9 +12,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      checks: write
-      pull-requests: write
+    #permissions:
+      #checks: write
+      #pull-requests: write
         #strategy:
       #matrix:
         #distribution: [temurin]
