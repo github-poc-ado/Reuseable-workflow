@@ -31,7 +31,8 @@ jobs:
           cache: maven
           
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
+        run: mvn clean test
+        #run: mvn -B package --file pom.xml
         
       #- name: Upload artifact for deployment job
        # uses: actions/upload-artifact@v2
@@ -45,10 +46,7 @@ jobs:
          # name: java-app
       
       - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v2
-        if: always()
+        uses: EnricoMi/publish-unit-test-result-action@v4
         with:
           files: |
-            test-results/**/*.xml
-            test-results/**/*.trx
-            test-results/**/*.json
+            target/surefire-reports/*.xml
