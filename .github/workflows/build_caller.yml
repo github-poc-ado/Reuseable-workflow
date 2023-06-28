@@ -34,20 +34,35 @@ jobs:
         run: mvn clean install
         #run: mvn -B package --file pom.xml
         
-      - name: publish test result
-        uses: actions/upload-artifact@v2
-        with:
-          name: java-app
-          path: ${project.build.directory}/surefire-reports
+      #- name: upload artifact
+        #uses: actions/upload-artifact@v2
+        #with:
+          #name: java-app
+          #path: ${project.build.directory}/surefire-reports
           #path: '${{ github.workspace }}/target/*.jar'
 
       #- name: Download artifact from build job
        # uses: actions/download-artifact@v2
         #with:
          # name: java-app
+         
+         #- name: Publish Test Results
+          # uses: EnricoMi/publish-unit-test-result-action@v2
+           #if: always()
+           #with:
+           #files: |
+             #test-results/**/*.xml
+             #test-results/**/*.trx
+             #test-results/**/*.json
       
       #- name: Publish Test Results
         #uses: EnricoMi/publish-unit-test-result-action@v2
         #with:
           #files: |
             #target/surefire-reports/*.xml
+            
+            
+      - name: Publish JUnit Test Results
+        uses: junit-team/junit5-action@v2
+        with:
+          reportPaths: '**/surefire-reports/TEST-*.xml'
