@@ -4,12 +4,10 @@ on:
   workflow_call: 
     inputs:
        java-version:
+          description: 'Java Version'
           required: true
           default: '11'
-          options:
-            8: 'Java 8'
-            11: 'Java 11'
-            14: 'Java 14'
+          type: string
   
 jobs:
   build:
