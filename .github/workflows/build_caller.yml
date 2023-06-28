@@ -46,7 +46,7 @@ jobs:
          # name: java-app
       
       - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v3
+        uses: EnricoMi/publish-unit-test-result-action@v2
         with:
           files: |
             target/surefire-reports/*.xml
