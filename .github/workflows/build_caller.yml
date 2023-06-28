@@ -46,14 +46,14 @@ jobs:
         #with:
          # name: java-app
          
-         #- name: Publish Test Results
-          # uses: EnricoMi/publish-unit-test-result-action@v2
-           #if: always()
-           #with:
-           #files: |
-             #test-results/**/*.xml
-             #test-results/**/*.trx
-             #test-results/**/*.json
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        #if: always()
+        with:
+          files: |
+              test-results/**/*.xml
+              test-results/**/*.trx
+              test-results/**/*.json
       
       #- name: Publish Test Results
         #uses: EnricoMi/publish-unit-test-result-action@v2
@@ -62,7 +62,4 @@ jobs:
             #target/surefire-reports/*.xml
             
             
-      - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v2
-        with:
-          reportPaths: '**/surefire-reports/TEST-*.xml'
+ 
