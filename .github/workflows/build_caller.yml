@@ -1,20 +1,26 @@
 name: Install Java and Build using Maven
 
 on:
+  workflow_dispatch:
+   inputs:
+      java-version:
+      description: 'Java Version'
+      required: true
+      default: '11'
+      type: string
+      options: 
+        - 8
+        - 11
+        - 17
   workflow_call: 
-   # inputs:
-    #   java-version:
-     #     description: 'Java Version'
-      #    required: true
-       #   default: '11'
-        #  type: string
+
   
 jobs:
   build:
     runs-on: ubuntu-latest
-    #permissions:
-      #checks: write
-      #pull-requests: write
+    permissions:
+      checks: write
+      pull-requests: write
         #strategy:
       #matrix:
         #distribution: [temurin]
@@ -27,7 +33,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '11'
+          java-version: ${{ github.event.inputs.java-version }}
           cache: maven
           
       - name: Build with Maven
