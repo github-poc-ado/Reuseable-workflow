@@ -6,16 +6,7 @@ on:
   
 jobs:
   build:
-    runs-on: ubuntu-latest
-    #permissions:
-      #checks: write
-      #pull-requests: write
-        #strategy:
-      #matrix:
-        #distribution: [temurin]
-        #java: [11]
-    #name: Java ${{ matrix.Java }} (${{ matrix.distribution }}) sample
-    
+    runs-on: ubuntu-latest    
     steps:
       - uses: actions/checkout@v3
       - name: Set up Java
@@ -26,35 +17,41 @@ jobs:
           cache: maven
           
       - name: Build with Maven
-        run: mvn clean install
+        run: mvn --batch-mode --update-snapshots install
         #run: mvn -B package --file pom.xml
+            
+      - name: 'Dependency Review'
+        uses: actions/dependency-review-action@v3
+        with:
+          fail-on-severity: moderate     
+       
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v2
+        with:
+          name: java-app
+          path: '${{ github.workspace }}/target/*.jar'
+      
+            
+  test:
+    runs-on: ubuntu-latest    
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '11'
+          cache: maven
+          
+      - name: Junit Test
+        run: mvn --batch-mode --update-snapshots install
+        #run: mvn -B package --file pom.xml 
         
-      #- name: upload artifact
-        #uses: actions/upload-artifact@v2
-        #with:
-          #name: java-app
-          #path: ${project.build.directory}/surefire-reports
-          #path: '${{ github.workspace }}/target/*.jar'
-
-      #- name: Download artifact from build job
-       # uses: actions/download-artifact@v2
-        #with:
-         # name: java-app
-         
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
-        #if: always()
+        if: always()
         with:
           files: |
-              test-results/**/*.xml
-              test-results/**/*.trx
-              test-results/**/*.json
+            target/surefire-reports/*.xml
       
-      #- name: Publish Test Results
-        #uses: EnricoMi/publish-unit-test-result-action@v2
-        #with:
-          #files: |
-            #target/surefire-reports/*.xml
-            
-            
- 
+    
