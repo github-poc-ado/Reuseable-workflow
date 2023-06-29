@@ -18,7 +18,7 @@ jobs:
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots install
         #run: mvn -B package --file pom.xml    
-      - name: 'Dependency Review'
+      - name: Dependency Review
         uses: actions/dependency-review-action@v3
         with:
           fail-on-severity: moderate      
