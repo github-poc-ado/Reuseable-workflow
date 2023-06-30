@@ -74,6 +74,10 @@ jobs:
         uses: peter-murray/github-security-report-action@v2
         with:
           token: ${{ secrets.SECURITY_TOKEN }}  
+          sarifReportDir: "../results"
+          outputDir: ${{ github.workspace }}
+          repository: ${{ github.repository }}
+    
   deploy:
     runs-on: ubuntu-latest
     needs:
