@@ -76,7 +76,7 @@ jobs:
         uses: github/codeql-action/analyze@v2
       - name: Generate Security Report
         #uses: peter-murray/github-security-report-action@v2
-        uses: rsdmike/github-security-report-action@v2
+        uses: rsdmike/github-security-report-action@v3
         with:
           token: ${{ secrets.token }}  
           sarifReportDir: "../results"
