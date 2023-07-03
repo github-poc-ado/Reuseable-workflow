@@ -152,8 +152,8 @@ jobs:
         secret-name: ${{ env.REGISTRY_NAME }}-registry-connection
         namespace: ${{ env.NAMESPACE }}
     #ContinueFromHere-->
-    # Deploy app to AKS
-    - uses: azure/k8s-deploy@v1
+    - name: Deploy app to AKS
+      uses: azure/k8s-deploy@v1
       with:
         manifests: |
           manifests/deployment.yml
