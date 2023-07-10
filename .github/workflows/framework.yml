@@ -73,6 +73,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     needs: build
+    if: ${{inputs.perform_unit_test}}
     steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 11 ${{inputs.java_version}}
