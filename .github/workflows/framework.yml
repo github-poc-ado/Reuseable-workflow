@@ -29,7 +29,7 @@ on:
       perform_docker_build:
         type: boolean
         description: Deploy
-        default: False
+        default: True
       advancedSecurityEnabled:
         type: boolean
         description: GitHub Advanced Security
@@ -47,9 +47,9 @@ on:
       token:
         required: false
       username:
-        required: false
+        required: true
       password:
-        required: false
+        required: true
       creds:
         required: false
 jobs:
