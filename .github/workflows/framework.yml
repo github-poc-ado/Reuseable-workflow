@@ -46,11 +46,11 @@ on:
     secrets:
       token:
         required: false
-      username:
+      REGISTRY_USERNAME:
         required: true
-      password:
+      REGISTRY_PASSWORD:
         required: true
-      creds:
+      AZURE_CREDENTIALS:
         required: true
 jobs:
   build:
@@ -156,10 +156,10 @@ jobs:
       uses: azure/docker-login@v1
       with:
         login-server: ${{ env.REGISTRY_NAME }}.azurecr.io
-        username: ${{ secrets.username }} 
-        #username: ${{ secrets.REGISTRY_USERNAME }} 
-        password: ${{ secrets.password }}
-       #password: ${{ secrets.REGISTRY_PASSWORD }}
+        #username: ${{ secrets.username }} 
+        REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }} 
+        #password: ${{ secrets.password }}
+        REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
     - name: Container build and push to a Azure Container registry (ACR)
       run: |
         docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/myimage:${{ github.sha }}
@@ -191,7 +191,7 @@ jobs:
     - name: Set Up AKS
       uses: azure/aks-set-context@v1
       with:
-        creds: '${{ secrets.creds }}'
+        AZURE_CREDENTIALS: '${{ secrets.AZURE_CREDENTIALS }}'
         cluster-name: ${{ env.CLUSTER_NAME }}
         resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}   
         
@@ -203,8 +203,8 @@ jobs:
       uses: azure/k8s-create-secret@v1
       with:
         container-registry-url: ${{ env.REGISTRY_NAME }}.azurecr.io
-        container-registry-username: ${{ secrets.username }}
-        container-registry-password: ${{ secrets.password }}
+        container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
+        container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
         secret-name: ${{ env.REGISTRY_NAME }}-registry-connection
         namespace: ${{ env.NAMESPACE }}
   
