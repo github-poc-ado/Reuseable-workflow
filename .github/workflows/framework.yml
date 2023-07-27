@@ -11,9 +11,9 @@ on:
         description: Java Version
         required: true
         default: '11'
-      REGISTRY_NAME:
-        required: true
-        type: string
+      #REGISTRY_NAME:
+       # required: true
+        #type: string
       perform_unit_test:
         type: boolean
         description: Junit Test
@@ -46,6 +46,8 @@ on:
     secrets:
       token:
         required: false
+      REGISTRY_NAME:
+        required: true
       REGISTRY_USERNAME:
         required: true
       REGISTRY_PASSWORD:
