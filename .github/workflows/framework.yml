@@ -12,7 +12,7 @@ on:
         required: true
         default: '11'
       REGISTRY_NAME:
-        required: false
+        required: true
         type: string
       perform_unit_test:
         type: boolean
@@ -51,7 +51,7 @@ on:
       password:
         required: true
       creds:
-        required: false
+        required: true
 jobs:
   build:
     runs-on: ubuntu-latest
