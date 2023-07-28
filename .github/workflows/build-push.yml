@@ -9,7 +9,11 @@ on:
         type: string
         description: Java Version
         required: true
-        default: '11'     
+        default: '11'   
+      advancedSecurityEnabled:
+        type: boolean
+        description: GitHub Advanced Security
+        default: False
     secrets:
       token:
         required: false
