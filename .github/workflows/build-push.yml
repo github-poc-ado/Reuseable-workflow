@@ -51,6 +51,8 @@ jobs:
         with:
           name: java-app
           path: '${{ github.workspace }}/target/*.jar'   
+      - name: display github worspace
+        run: echo "${{ github.workspace }}"
       - name: Docker Login (Connect to Azure Container registry (ACR))
         uses: azure/docker-login@v1
         with:
@@ -61,5 +63,6 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
       - name: Container build and push to a Azure Container registry (ACR)
         run: |
+          echo pwd
           docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/myimage:${{ github.sha }}
           docker push ${{ env.REGISTRY_NAME }}.azurecr.io/myimage:${{ github.sha }}
