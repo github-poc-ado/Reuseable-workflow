@@ -1,0 +1,61 @@
+name: Java Maven Workflow
+on: 
+  push:
+    branches:
+      - main
+  workflow_call:
+    inputs:
+      java_version:
+        type: string
+        description: Java Version
+        required: true
+        default: '11'     
+    secrets:
+      token:
+        required: false
+      REGISTRY_NAME:
+        required: true
+      REGISTRY_USERNAME:
+        required: true
+      REGISTRY_PASSWORD:
+        required: true
+      AZURE_CREDENTIALS:
+        required: true
+jobs:
+  build:
+    env:
+      #REGISTRY_NAME: '${{ inputs.REGISTRY_NAME }}'
+      REGISTRY_NAME: '${{ secrets.REGISTRY_NAME }}'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up ${{inputs.java_version}}
+        uses: actions/setup-java@v3
+        with:
+          java-version: '${{inputs.java_version}}'
+          distribution: 'temurin'
+          cache: maven
+      - name: Maven Build
+        run: mvn --batch-mode --update-snapshots install
+      - name: 'Dependency Review'
+        if: ${{inputs.advancedSecurityEnabled}}
+        uses: actions/dependency-review-action@v3
+        with:
+          fail-on-severity: moderate        
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v2
+        with:
+          name: java-app
+          path: '${{ github.workspace }}/target/*.jar'   
+      - name: Docker Login (Connect to Azure Container registry (ACR))
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.REGISTRY_NAME }}.azurecr.io
+          #username: ${{ secrets.username }} 
+          username: ${{ secrets.REGISTRY_USERNAME }} 
+          #password: ${{ secrets.password }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+      - name: Container build and push to a Azure Container registry (ACR)
+        run: |
+          docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/myimage:${{ github.sha }}
+          docker push ${{ env.REGISTRY_NAME }}.azurecr.io/myimage:${{ github.sha }}
