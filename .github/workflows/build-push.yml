@@ -63,6 +63,7 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
       - name: Container build and push to a Azure Container registry (ACR)
         run: |
-          echo pwd
+          ls -lrt ${{ github.workspace }}
+          ls -lrt ${{ github.workspace }}/target
           docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/myimage:${{ github.sha }}
           docker push ${{ env.REGISTRY_NAME }}.azurecr.io/myimage:${{ github.sha }}
