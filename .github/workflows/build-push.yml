@@ -79,10 +79,13 @@ jobs:
           docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/myimage:${{ github.sha }}
           docker push ${{ env.REGISTRY_NAME }}.azurecr.io/myimage:${{ github.sha }}
           
-      - name: Set Up AKS
-        uses: azure/aks-set-context@v1
+      - uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
+      - name: Set Up AKS
+        uses: azure/aks-set-context@v3
+        with:
           cluster-name: ${{ secrets.CLUSTER_NAME }}
           resource-group: ${{ secrets.CLUSTER_RESOURCE_GROUP }}   
         
