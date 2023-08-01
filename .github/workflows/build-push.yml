@@ -79,12 +79,16 @@ jobs:
           docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/myimage:${{ github.sha }}
           docker push ${{ env.REGISTRY_NAME }}.azurecr.io/myimage:${{ github.sha }}
           
+      - run: |
+          echo "This is the Azure Creds:" 
+          echo ${{ secrets.AZURE_CREDENTIALS }}
+          
       - name: Set Up AKS
         uses: azure/aks-set-context@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
           cluster-name: ${{ secrets.CLUSTER_NAME }}
-          resource-group: ${{ secrets.CLUSTER_RESOURCE_GROUP }}   
+          resource-group: ${{ secrets.CLUSTER_RESOURCE_GROUP }}  
         
       - name: Create namespace if does not exist
         run: |
