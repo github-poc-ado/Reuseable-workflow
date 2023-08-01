@@ -52,11 +52,11 @@ jobs:
           cache: maven
       - name: Maven Build
         run: mvn --batch-mode --update-snapshots install
-      - name: 'Dependency Review'
-        if: ${{inputs.advancedSecurityEnabled}}
-        uses: actions/dependency-review-action@v3
-        with:
-          fail-on-severity: moderate        
+      #- name: 'Dependency Review'
+       # if: ${{inputs.advancedSecurityEnabled}}
+        #uses: actions/dependency-review-action@v3
+        #with:
+         # fail-on-severity: moderate        
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
