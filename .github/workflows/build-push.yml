@@ -33,6 +33,10 @@ on:
         required: true
       NAMESPACE:
         required: true
+      AZURE_TENANT_ID:
+        required: true
+      AZURE_SUBSCRIPTION_ID:
+        required: true
 
 jobs:
   build:
