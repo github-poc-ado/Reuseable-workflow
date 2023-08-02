@@ -41,6 +41,8 @@ jobs:
       REGISTRY_NAME: '${{ secrets.REGISTRY_NAME }}'
       REGISTRY_USERNAME: '${{ secrets.REGISTRY_USERNAME }}'
       REGISTRY_PASSWORD: '${{ secrets.REGISTRY_PASSWORD}}'
+      AZURE_TENANT_ID: '${{ secrets.AZURE_TENANT_ID }}'
+      AZURE_SUBSCRIPTION_ID: '${{ secrets.AZURE_SUBSCRIPTION_ID }}'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -64,14 +66,22 @@ jobs:
           path: '${{ github.workspace }}/target/*.jar'   
       - name: display github worspace
         run: echo "${{ github.workspace }}"
-      - name: Docker Login (Connect to Azure Container registry (ACR))
-        uses: azure/docker-login@v1
-        with:
-          login-server: ${{ secrets.REGISTRY_NAME }}.azurecr.io
+      #- name: Docker Login (Connect to Azure Container registry (ACR))
+       # uses: azure/docker-login@v1
+        #with:
+         # login-server: ${{ secrets.REGISTRY_NAME }}.azurecr.io
           #username: ${{ secrets.username }} 
-          username: ${{ env.REGISTRY_USERNAME }} 
+          #username: ${{ env.REGISTRY_USERNAME }} 
           #password: ${{ secrets.password }}
-          password: ${{ env.REGISTRY_PASSWORD }}
+          #password: ${{ env.REGISTRY_PASSWORD }}
+          
+      - name: Azure CLI Login with Managed Identity
+        run: |
+          az login --identity
+        env:
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+    
       - name: Container build and push to a Azure Container registry (ACR)
         run: |
           ls -lrt ${{ github.workspace }}
