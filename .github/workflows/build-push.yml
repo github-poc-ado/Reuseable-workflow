@@ -37,6 +37,8 @@ on:
         required: true
       AZURE_SUBSCRIPTION_ID:
         required: true
+      REPOSITORY:
+        required: true
 
 jobs:
   build:
@@ -101,7 +103,7 @@ jobs:
           service_principal_password: ${{ secrets.AZURE_CREDENTIALS }}
           tenant: ${{ secrets.AZURE_TENANT_ID }}
           registry: ${{ secrets.REGISTRY_NAME }}
-          repository: ${{ secrets.repository }}
+          repository: ${{ secrets.REPOSITORY }}
           image: myimage
           #git_access_token: ${{ secrets.git_access_token }}
           folder: ./
