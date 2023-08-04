@@ -79,19 +79,35 @@ jobs:
           #password: ${{ secrets.password }}
           #password: ${{ env.REGISTRY_PASSWORD }}
           
-      - name: Azure CLI Login with Managed Identity
-        run: |
-          az login --identity
-        env:
-          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-          AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      #- name: Azure CLI Login with Managed Identity
+        #run: |
+          #az login --identity
+        #env:
+          #AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          #AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
     
-      - name: Container build and push to a Azure Container registry (ACR)
-        run: |
-          ls -lrt ${{ github.workspace }}
-          ls -lrt ${{ github.workspace }}/target
-          docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/myimage:${{ github.sha }}
-          docker push ${{ env.REGISTRY_NAME }}.azurecr.io/myimage:${{ github.sha }}
+      #- name: Container build and push to a Azure Container registry (ACR)
+        #run: |
+          #ls -lrt ${{ github.workspace }}
+          #ls -lrt ${{ github.workspace }}/target
+          #docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/myimage:${{ github.sha }}
+          #docker push ${{ env.REGISTRY_NAME }}.azurecr.io/myimage:${{ github.sha }}
+
+      - name: ACR build
+        id: acr
+        uses: azure/acr-build@v1
+        with:
+          service_principal: ${{ secrets.AZURE_CREDENTIALS }}
+          service_principal_password: ${{ secrets.AZURE_CREDENTIALS }}
+          tenant: ${{ secrets.AZURE_TENANT_ID }}
+          registry: ${{ secrets.REGISTRY_NAME }}
+          repository: ${{ secrets.repository }}
+          image: myimage
+          #git_access_token: ${{ secrets.git_access_token }}
+          folder: ./
+          dockerfile: ./Dockerfile
+          branch: main
+          build_args: '[{"arg_one":"value_one"}, {"arg_two":"value_two"}]'
           
       - run: |
           echo "This is the Azure Creds:" 
