@@ -1,6 +1,8 @@
 name: Java Maven Workflow
 on: 
   push:
+    paths:
+      - "src/docker/**"
     branches:
       - main
       - testing
@@ -106,8 +108,8 @@ jobs:
           repository: ${{ secrets.AZURE_REPOSITORY }}
           image: myimage
           #git_access_token: ${{ secrets.git_access_token }}
-          folder: ./
-          dockerfile: ./Dockerfile
+          folder: src/docker
+          dockerfile: ../../dockerfiles/Dockerfile
           branch: main
           build_args: '[{"arg_one":"value_one"}, {"arg_two":"value_two"}]'
           
