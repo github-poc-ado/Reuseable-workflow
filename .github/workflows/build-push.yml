@@ -41,6 +41,10 @@ on:
         required: true
       AZURE_REPOSITORY:
         required: true
+      AZURE_SERVICE_PRINCIPAL:
+         required: true
+      AZURE_SERVICE_PRINCIPAL_PASSWORD:
+         required : true
 
 jobs:
   build:
@@ -106,17 +110,17 @@ jobs:
         id: acr
         uses: azure/acr-build@v1
         with:
-          service_principal: ${{ secrets.AZURE_CREDENTIALS }}
-          service_principal_password: ${{ secrets.AZURE_CREDENTIALS }}
+          service_principal: ${{ secrets.AZURE_SERVICE_PRINCIPAL }}
+          service_principal_password: ${{ secrets.AZURE_SERVICE_PRINCIPAL_PASSWORD }}
           tenant: ${{ secrets.AZURE_TENANT_ID }}
           registry: ${{ secrets.REGISTRY_NAME }}
           repository: ${{ secrets.AZURE_REPOSITORY }}
-          image: myimage
+          image: eqhimg1
           #git_access_token: ${{ secrets.git_access_token }}
           folder: src/docker
           dockerfile: ../../dockerfiles/Dockerfile
           branch: main
-          build_args: '[{"arg_one":"value_one"}, {"arg_two":"value_two"}]'
+          #build_args: '[{"arg_one":"value_one"}, {"arg_two":"value_two"}]'
           
       - run: |
           echo "This is the Azure Creds:" 
