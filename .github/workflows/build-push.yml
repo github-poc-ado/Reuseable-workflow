@@ -41,10 +41,10 @@ on:
         required: true
       AZURE_REPOSITORY:
         required: true
-      AZURE_SERVICE_PRINCIPAL:
-         required: true
-      AZURE_SERVICE_PRINCIPAL_PASSWORD:
-         required : true
+      #AZURE_SERVICE_PRINCIPAL:
+         #required: true
+      #AZURE_SERVICE_PRINCIPAL_PASSWORD:
+         #required : true
 
 jobs:
   build:
