@@ -110,8 +110,8 @@ jobs:
         id: acr
         uses: azure/acr-build@v1
         with:
-          service_principal: ${{ secrets.AZURE_SERVICE_PRINCIPAL }}
-          service_principal_password: ${{ secrets.AZURE_SERVICE_PRINCIPAL_PASSWORD }}
+          service_principal: ${{ secrets.AZURE_CREDENTIALS }}
+          service_principal_password: ${{ secrets.AZURE_CREDENTIALS }}
           tenant: ${{ secrets.AZURE_TENANT_ID }}
           registry: ${{ secrets.REGISTRY_NAME }}
           repository: ${{ secrets.AZURE_REPOSITORY }}
