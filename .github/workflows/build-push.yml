@@ -45,6 +45,8 @@ on:
          required: true
       AZURE_SERVICE_PRINCIPAL_PASSWORD:
          required : true
+      git_access_token:
+         required: true
 
 jobs:
   build:
@@ -116,7 +118,7 @@ jobs:
           registry: ${{ secrets.REGISTRY_NAME }}
           repository: ${{ secrets.AZURE_REPOSITORY }}
           image: eqhimg1
-          #git_access_token: ${{ secrets.git_access_token }}
+          git_access_token: ${{ secrets.git_access_token }}
           folder: src/deployment
           dockerfile: src/deployment/Dockerfile
           branch: main
