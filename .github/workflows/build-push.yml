@@ -2,7 +2,7 @@ name: Java Maven Workflow
 on: 
   push:
     paths:
-      - "src/docker/**"
+      - "src/deployment/**"
     branches:
       - main
       - testing
