@@ -119,9 +119,9 @@ jobs:
           repository: ${{ secrets.AZURE_REPOSITORY }}
           image: eqhimg1
           git_access_token: ${{ secrets.git_access_token }}
-          folder: ./deployment
+          folder: deployment
           #dockerfile: src/deployment/Dockerfile
-          dockerfile: ./Dockerfile
+          dockerfile: Dockerfile
           branch: main
           build_args: '[{"arg_one":"value_one"}, {"arg_two":"value_two"}]'
           
