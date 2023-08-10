@@ -1,8 +1,8 @@
 name: Java Maven Workflow
 on: 
   push:
-    paths:
-      - "src/deployment/**"
+    #paths:
+    #  - "src/deployment/**"
     branches:
       - main
       - testing
@@ -119,7 +119,7 @@ jobs:
           repository: ${{ secrets.AZURE_REPOSITORY }}
           image: eqhimg1
           git_access_token: ${{ secrets.git_access_token }}
-          folder: src/deployment
+          #folder: src/deployment
           #dockerfile: src/deployment/Dockerfile
           dockerfile: ../../Dockerfile
           branch: main
