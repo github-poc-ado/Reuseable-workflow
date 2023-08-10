@@ -68,6 +68,11 @@ jobs:
           cache: maven
       - name: Maven Build
         run: mvn --batch-mode --update-snapshots install
+        
+      - name: display paths
+        run: |
+          ls -lrt ${{ github.workspace }}
+          ls -lrt ${{ github.workspace }}/target
       #- name: 'Dependency Review'
        # if: ${{inputs.advancedSecurityEnabled}}
         #uses: actions/dependency-review-action@v3
