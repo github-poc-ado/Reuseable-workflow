@@ -120,8 +120,8 @@ jobs:
           image: eqhimg1
           git_access_token: ${{ secrets.git_access_token }}
           folder: src/deployment
-          dockerfile: src/deployment/Dockerfile
-          #dockerfile: ../../Dockerfile
+          #dockerfile: src/deployment/Dockerfile
+          dockerfile: ./Dockerfile
           branch: main
           build_args: '[{"arg_one":"value_one"}, {"arg_two":"value_two"}]'
           
