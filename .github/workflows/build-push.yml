@@ -132,7 +132,7 @@ jobs:
           git_access_token: ${{ secrets.git_access_token }}
           #folder: ${{ github.workspace }}
           #dockerfile: src/deployment/Dockerfile
-          dockerfile: deployment/Dockerfile
+          #dockerfile: deployment/Dockerfile
           branch: main
           #build_args: '[{"arg_one":"value_one"}, {"arg_two":"value_two"}]'
           
