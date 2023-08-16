@@ -130,7 +130,7 @@ jobs:
           repository: ${{ secrets.AZURE_REPOSITORY }}
           image: eqhimg1
           git_access_token: ${{ secrets.git_access_token }}
-          folder: ${{ github.workspace }}
+          #folder: ${{ github.workspace }}
           #dockerfile: src/deployment/Dockerfile
           dockerfile: deployment/Dockerfile
           branch: main
