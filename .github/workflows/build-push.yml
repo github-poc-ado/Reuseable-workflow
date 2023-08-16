@@ -112,7 +112,9 @@ jobs:
       #  uses: azure/login@v1
       #  with:
       #    creds: ${{ secrets.AZURE_CREDENTIALS }}
-
+      - name: Copy the target to Build Context
+        run: cp ${{ github.workspace }}/target/*.jar ${{ github.workspace }}/deployment 
+      
       - name: ACR build
         id: acr
         uses: azure/acr-build@v1
