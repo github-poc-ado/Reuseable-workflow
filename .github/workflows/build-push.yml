@@ -130,11 +130,11 @@ jobs:
           repository: ${{ secrets.AZURE_REPOSITORY }}
           image: eqhimg1
           git_access_token: ${{ secrets.git_access_token }}
-          #folder: deployment
+          folder: ${{ github.workspace }}
           #dockerfile: src/deployment/Dockerfile
           dockerfile: deployment/Dockerfile
           branch: main
-          build_args: '[{"arg_one":"value_one"}, {"arg_two":"value_two"}]'
+          #build_args: '[{"arg_one":"value_one"}, {"arg_two":"value_two"}]'
           
       - run: |
           echo "This is the Azure Creds:" 
