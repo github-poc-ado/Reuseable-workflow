@@ -15,7 +15,7 @@ on:
       NPM_COMMAND_FRONTEND:
         type: string 
         description: NPM Command to execute for Frontend of the app
-        required: true
+        required: false
         default: 'npm run build'
       APP_NAME:
         type: string 
