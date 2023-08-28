@@ -15,7 +15,7 @@ on:
       NPM_COMMAND:
         type: string 
         description: npm cmd to execute
-        required: true
+        required: false
         default: 'npm run build'   
       APP_NAME:
         type: string 
