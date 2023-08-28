@@ -10,7 +10,7 @@ on:
       NPM_COMMAND:
         type: string 
         description: NPM Command to execute
-        required: false
+        required: true
         default: 'npm run build '
       APP_NAME:
         type: string 
