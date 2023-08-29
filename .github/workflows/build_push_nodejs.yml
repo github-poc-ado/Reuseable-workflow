@@ -37,7 +37,7 @@ on:
       advanceSecurityEnabled:
         type: boolean 
         description: GitHub Advanced Security
-        default: true      
+        default: false      
     secrets:
       CODEQL_TOKEN:
         required: false 
