@@ -37,10 +37,10 @@ on:
       advanceSecurityEnabled:
         type: boolean 
         description: GitHub Advanced Security
-        default: False        
+        default: true        
     secrets:
       CODEQL_TOKEN:
-        required: false 
+        required: true 
       DOCKER_USERNAME:
         required: false
       DOCKER_PASSWORD:
