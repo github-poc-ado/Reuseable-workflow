@@ -37,7 +37,7 @@ on:
       advanceSecurityEnabled:
         type: boolean 
         description: GitHub Advanced Security
-        default: false       
+        default: true      
     secrets:
       CODEQL_TOKEN:
         required: false 
@@ -60,11 +60,11 @@ jobs:
           node-version: ${{ inputs.NODE_VERSION }}
       - name: NPM Install
         run: npm install ${{ inputs. NPM_JSON_LOCATION }}
-      - name: 'Dependency Review'
-        if: ${{ inputs.advanceSecurityEnabled }}
-        uses: actions/dependency-review-action@v3
-        with:
-          fail-on-severity: moderate        
+      #- name: 'Dependency Review'
+      #  if: ${{ inputs.advanceSecurityEnabled }}
+      #  uses: actions/dependency-review-action@v3
+      #  with:
+       #   fail-on-severity: moderate        
       - name: Initialize CodeQL
         if: ${{ inputs.advanceSecurityEnabled }}
         uses: github/codeql-action/init@v2
