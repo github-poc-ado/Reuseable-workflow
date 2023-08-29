@@ -60,7 +60,64 @@ jobs:
           node-version: ${{ inputs.NODE_VERSION }}
       - name: NPM Install
         run: npm install ${{ inputs. NPM_JSON_LOCATION }}
-     
+      - name: 'Dependency Review'
+        if: ${{ inputs.advanceSecurityEnabled }}
+        uses: actions/dependency-review-action@v3
+        with:
+          fail-on-severity: moderate        
+      - name: Initialize CodeQL
+        if: ${{ inputs.advanceSecurityEnabled }}
+        uses: github/codeql-action/init@v2
+      - name: Autobuild
+        if: ${{ inputs.advanceSecurityEnabled }}
+        uses: github/codeql-action/autobuild@v2
+      - name: Perform CodeQL Analysis
+        if: ${{ inputs.advanceSecurityEnabled }}
+        uses: github/codeql-action/analyze@v2
+      - name: Generate Security Report
+        if: ${{ inputs.advanceSecurityEnabled }}
+        uses: rsdmike/github-security-report-action@v3.0.4
+        with:
+          token: ${{ secrets.CODEQL_TOKEN }}  
+          sarifReportDir: "../results"
+          outputDir: ${{ github.workspace }}
+          repository: ${{ github.repository }}
+      - name: Upload Security Report
+        if: ${{ inputs.advanceSecurityEnabled }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: security-report
+          path: '${{ github.workspace }}/*.pdf'
+      - name: NonProd- Docker Login (Connect to Azure Container registry (ACR))
+        if: ${{ inputs.DOCKER_NONPROD_REGISTRY_NAME }}
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.DOCKER_NONPROD_REGISTRY_NAME }}.azurecr.io
+          username: ${{ secrets.DOCKER_USERNAME }} 
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: NonProd-Container build and push to a Azure Container registry (ACR)
+        if: ${{ inputs.DOCKER_NONPROD_REGISTRY_NAME }}
+        run: |
+          docker build . -t ${{ secrets.DOCKER_NONPROD_REGISTRY_NAME }}.azurecr.io/${{ inputs.APP_NAME }}:$GITHUB_RUN_ID
+          docker push ${{ secrets.DOCKER_NONPROD_REGISTRY_NAME }}.azurecr.io/${{ inputs.APP_NAME }}:$GITHUB_RUN_ID
+      - name: Prod-Docker Login (Connect to Azure Container registry (ACR))
+        if: ${{ inputs.DOCKER_PROD_REGISTRY_NAME }}
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.DOCKER_PROD_REGISTRY_NAME }}.azurecr.io
+          username: ${{ secrets.DOCKER_USERNAME }} 
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Prod-Container build and push to a Azure Container registry (ACR)
+        if: ${{ inputs.DOCKER_PROD_REGISTRY_NAME }}
+        run: |
+          docker build . -t ${{ secrets.DOCKER_PROD_REGISTRY_NAME }}.azurecr.io/${{ inputs.APP_NAME }}:$GITHUB_RUN_ID
+          docker push ${{ secrets.DOCKER_PROD_REGISTRY_NAME }}.azurecr.io/${{ inputs.APP_NAME }}:$GITHUB_RUN_ID 
+#      - name: Upload artifact
+#        if: always()
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: node-app
+#          path: '${{ github.workspace }}/dist/*.*
       
 
        
